@@ -2,6 +2,10 @@ import Header from "@/app/search/components/Header";
 import SearchSideBar from "@/app/search/components/SearchSideBar";
 import RestaurantCard from "@/app/search/components/RestaurantCard";
 
+export const metadata = {
+  title: 'Search | OpenTable',
+}
+
 export default function Search() {
   return (
     <>
