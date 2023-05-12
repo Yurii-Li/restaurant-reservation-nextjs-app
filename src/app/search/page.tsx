@@ -1,9 +1,16 @@
 import Header from "@/app/search/components/Header";
 import SearchSideBar from "@/app/search/components/SearchSideBar";
 import RestaurantCard from "@/app/search/components/RestaurantCard";
-import {Cuisine, Location, PrismaClient} from "@prisma/client";
+import {Cuisine, Location, PRICE, PrismaClient} from "@prisma/client";
 import {RestaurantCardType} from "@/interfaces/restaurant.interface";
 
+interface SearchProps {
+  searchParams: {
+    city ?: string,
+    cuisine ?: string,
+    price ?: PRICE
+  }
+}
 
 export const metadata = {
   title: 'Search | OpenTable',
@@ -12,8 +19,7 @@ export const metadata = {
 
 const prisma = new PrismaClient();
 
-const fetchRestaurantsByCity = (city: string): Promise<RestaurantCardType[]> => {
-
+const fetchRestaurantsByCity = (city: string | undefined ): Promise<RestaurantCardType[]> => {
 
   const select = {
     id: true,
@@ -49,7 +55,7 @@ const fetchCuisines = (): Promise<Cuisine[]> => {
   return prisma.cuisine.findMany()
 }
 
-export default async function Search({searchParams}: { searchParams: { city: string } }) {
+export default async function Search({searchParams}:  SearchProps) {
 
   const restaurants = await fetchRestaurantsByCity(searchParams.city);
 
@@ -60,7 +66,7 @@ export default async function Search({searchParams}: { searchParams: { city: str
     <>
       <Header/>
       <div className="flex py-4 m-auto w-2/3 justify-between items-start">
-        <SearchSideBar locations={locations} cuisines={cuisines}  />
+        <SearchSideBar locations={locations} cuisines={cuisines} searchParams={searchParams}  />
 
         <div className="w-5/6 ">
           {
