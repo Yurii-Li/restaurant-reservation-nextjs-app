@@ -13,6 +13,7 @@ interface SearchSideBarProps {
 }
 
 
+
 export default function SearchSideBar({locations, cuisines, searchParams}: SearchSideBarProps) {
 
   const prices = [
