@@ -2,6 +2,7 @@ import Link from "next/link";
 import {RestaurantCardType} from "@/interfaces/restaurant.interface";
 import Price from "@/app/components/Price";
 import {calculateReviewRatingAverage} from "@/utils/calculateReviewRatingAverage";
+import Stars from "@/app/components/Stars";
 
 export default function RestaurantCard({restaurant}: { restaurant: RestaurantCardType }) {
 
@@ -18,7 +19,7 @@ export default function RestaurantCard({restaurant}: { restaurant: RestaurantCar
   }
 
   return (
-    <div className="border-b flex items-center pb-5 ml-4">
+    <div className="border-b flex pb-2 pt-2 first-of-type:pt-0 ml-4">
 
       <img
         src={restaurant.main_image}
@@ -27,8 +28,8 @@ export default function RestaurantCard({restaurant}: { restaurant: RestaurantCar
       />
       <div className="pl-5">
         <h2 className="text-3xl">{restaurant.name}</h2>
-        <div className="flex items-start">
-          <div className="flex mb-2">*****</div>
+        <div className="flex items-center">
+          <Stars reviews={restaurant.reviews}/>
           <p className="ml-2 text-sm">{renderRatingText()}</p>
         </div>
         <div className="mb-9">
