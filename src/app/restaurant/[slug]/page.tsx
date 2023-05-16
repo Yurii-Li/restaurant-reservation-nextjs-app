@@ -21,6 +21,7 @@ const fetchRestaurantBySlug = async (slug: string) : Promise<RestaurantDetailsTy
       images: true,
       description: true,
       slug: true,
+      reviews: true,
     }
   })
 
@@ -48,13 +49,13 @@ export default async function RestaurantDetails({params}: { params: { slug: stri
 
         <Title name={restaurant.name}/>
 
-        <Rating/>
+        <Rating reviews={restaurant.reviews} />
 
         <Description description={restaurant.description} />
 
         <Images images={restaurant.images}/>
 
-        <Reviews/>
+        <Reviews reviews={restaurant.reviews}/>
       </div>
 
       <div className="w-[27%] relative text-reg">
