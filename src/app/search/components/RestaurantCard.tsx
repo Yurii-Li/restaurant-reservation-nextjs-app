@@ -28,11 +28,11 @@ export default function RestaurantCard({restaurant}: { restaurant: RestaurantCar
       />
       <div className="pl-5">
         <h2 className="text-3xl">{restaurant.name}</h2>
-        <div className="flex items-center">
+        <div className="flex items-center mb-1">
           <Stars reviews={restaurant.reviews}/>
           <p className="ml-2 text-sm">{renderRatingText()}</p>
         </div>
-        <div className="mb-9">
+        <div className="mb-8">
           <div className="font-light flex text-reg">
             <p className="mr-4">
               <Price price={restaurant.price}/>
