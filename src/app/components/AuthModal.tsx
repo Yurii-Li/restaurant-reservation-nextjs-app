@@ -1,8 +1,9 @@
 "use client"
 
 import {useState} from "react";
+import AuthModalInputs from "@/app/components/AuthModalInputs";
 
-export default function LoginModal({isSignin}: { isSignin: boolean }) {
+export default function AuthModal({isSignin}: { isSignin: boolean }) {
 
   const [modal, setModal] = useState(false)
 
@@ -34,7 +35,28 @@ export default function LoginModal({isSignin}: { isSignin: boolean }) {
                className={"w-screen h-screen top-0 right-0 bottom-0 left-0 fixed bg-gray-950/80"}></div>
           <div
             className={"absolute top-[40%] left-[50%]  -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded max-w-2xl min-w-[300px] "}>
-            <h2>Hello</h2>
+
+            <div className={"p-2"}>
+              <div className={"uppercase font-bold text-center pb-2 border-b mb-2"}>
+                <p className={"text-sm"}>
+                  {renderContent("Sign In", "Create Account")}
+                </p>
+              </div>
+
+              <div className={"m-auto"}>
+                <h2 className={"text-2xl font-light text-center"}>
+                  {renderContent("Login Into Your Account ", "Create Your OpenTable Account")}
+                </h2>
+
+                <AuthModalInputs />
+
+                <button className={"uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"}>
+                  {renderContent("Sign In", "Sign Up")}
+                </button>
+
+              </div>
+
+            </div>
 
 
           </div>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LoginModal from "@/app/components/LoginModal";
+import AuthModal from "@/app/components/AuthModal";
 
 export default function NavBar() {
   return(
@@ -8,8 +8,8 @@ export default function NavBar() {
       <div>
         <div className={"flex"}>
 
-          <LoginModal isSignin={true}/>
-          <LoginModal isSignin={false}/>
+          <AuthModal isSignin={true}/>
+          <AuthModal isSignin={false}/>
         </div>
       </div>
     </nav>
