@@ -34,7 +34,7 @@ export default function AuthModal({isSignin}: { isSignin: boolean }) {
           <div onClick={toggleModal}
                className={"w-screen h-screen top-0 right-0 bottom-0 left-0 fixed bg-gray-950/80"}></div>
           <div
-            className={"absolute top-[40%] left-[50%]  -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded max-w-2xl min-w-[300px] "}>
+            className={"absolute top-[50%] left-[50%]  -translate-x-1/2 -translate-y-1/2 bg-white p-4 rounded max-w-2xl min-w-[300px] "}>
 
             <div className={"p-2"}>
               <div className={"uppercase font-bold text-center pb-2 border-b mb-2"}>
