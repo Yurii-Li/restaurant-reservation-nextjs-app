@@ -1,6 +1,7 @@
 import {NextResponse} from "next/server";
 import validator from 'validator';
 import {PrismaClient} from '@prisma/client'
+import bcrypt from 'bcrypt'
 
 const prisma = new PrismaClient()
 
@@ -60,7 +61,9 @@ export async function POST(req: Request) {
     return NextResponse.json({errorMessage : 'Email is associated with another account'}, {status: 400})
   }
 
-  return NextResponse.json({message: 'User created'}, {status: 200})
+  const hashedPassword = await bcrypt.hash(password, 10)
+
+
 }
 
 
