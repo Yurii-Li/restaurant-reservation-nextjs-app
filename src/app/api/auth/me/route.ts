@@ -6,25 +6,10 @@ const prisma = new PrismaClient()
 
 export async function POST(req: Request) {
 
-  const bearerToken = req.headers.get('authorization')
-
-  if (!bearerToken) {
-    return NextResponse.json({errorMessage: 'Unauthorized'}, {status: 401})
-  }
+  const bearerToken = req.headers.get('authorization') as string
 
   const token = bearerToken.split(' ')[1]
 
-  if (!token) {
-    return NextResponse.json({errorMessage: 'Unauthorized'}, {status: 401})
-  }
-
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET)
-
-  try {
-    await jose.jwtVerify(token, secret)
-  } catch (e) {
-    return NextResponse.json({errorMessage: 'Unauthorized'}, {status: 401})
-  }
 
   const payload  = jose.decodeJwt(token)
 
