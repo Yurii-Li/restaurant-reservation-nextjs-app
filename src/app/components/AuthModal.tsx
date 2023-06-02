@@ -1,7 +1,8 @@
 "use client"
 
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import AuthModalInputs from "@/app/components/AuthModalInputs";
+import useAuth from "@/hooks/useAuth";
 
 export default function AuthModal({isSignin}: { isSignin: boolean }) {
 
@@ -15,6 +16,27 @@ export default function AuthModal({isSignin}: { isSignin: boolean }) {
     city: "",
     password: "",
   })
+
+  const [disabled, setDisabled] = useState(true)
+
+  useEffect(() => {
+    if (isSignin) {
+      if (inputs.email && inputs.password) {
+        return setDisabled(false)
+      }
+    } else {
+      if (inputs.firstName && inputs.lastName && inputs.email && inputs.phone && inputs.city && inputs.password) {
+        return setDisabled(false)
+      }
+    }
+
+
+    setDisabled(true)
+
+  }, [inputs])
+
+
+  const {signin, signup} = useAuth();
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs({
@@ -35,6 +57,12 @@ export default function AuthModal({isSignin}: { isSignin: boolean }) {
 
   const renderContent = (signinContent: string, signupContent: string) => {
     return isSignin ? signinContent : signupContent
+  }
+
+  const handleClick = () => {
+    if (isSignin) {
+      signin({email: inputs.email, password: inputs.password})
+    }
   }
 
   return (
@@ -66,8 +94,10 @@ export default function AuthModal({isSignin}: { isSignin: boolean }) {
 
                 <AuthModalInputs inputs={inputs} handleChangeInput={handleChangeInput} isSignin={isSignin}/>
 
-                <button
-                  className={"uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"}>
+                <button disabled={disabled}
+                        className={"uppercase bg-red-600 w-full text-white p-3 rounded text-sm mb-5 disabled:bg-gray-400"}
+                        onClick={handleClick}
+                >
                   {renderContent("Sign In", "Sign Up")}
                 </button>
 
