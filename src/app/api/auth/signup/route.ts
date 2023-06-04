@@ -100,7 +100,6 @@ export async function POST(req: Request) {
   response.cookies.set({
     name: 'jwt',
     value: token,
-    httpOnly: true,
     maxAge: 60 * 6 * 24,
   })
 
