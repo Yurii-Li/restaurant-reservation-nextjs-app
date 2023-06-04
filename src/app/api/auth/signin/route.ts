@@ -32,17 +32,17 @@ export async function POST(req: Request) {
     return NextResponse.json({errorMessage: errors[0]}, {status: 400})
   }
 
-  const userWithEmail = await prisma.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: {
       email
     }
   })
 
-  if (!userWithEmail) {
+  if (!user) {
     return NextResponse.json({errorMessage: 'Email or password is not valid'}, {status: 401})
   }
 
-  const passwordMatch = await bcrypt.compare(password, userWithEmail.password)
+  const passwordMatch = await bcrypt.compare(password, user.password)
 
   if (!passwordMatch) {
     return NextResponse.json({errorMessage: 'Email or password is not valid'}, {status: 401})
@@ -52,10 +52,29 @@ export async function POST(req: Request) {
 
   const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 
-  const token = await new jose.SignJWT({email: userWithEmail.email})
+  const token = await new jose.SignJWT({email: user.email})
     .setProtectedHeader({alg})
     .setExpirationTime("24h")
     .sign(secret)
 
-  return NextResponse.json({token}, {status: 200})
+  // return NextResponse.json({token}, {status: 200})
+
+  const response =  NextResponse.json({
+    firstName: user.first_name,
+    lastName: user.last_name,
+    email: user.email,
+    phone: user.phone,
+    city: user.city,
+
+  }, {status: 200})
+
+  response.cookies.set({
+    name: "jwt",
+    value: token,
+    httpOnly: true,
+    maxAge: 60 * 6 * 24,
+  })
+
+  return response
+
 }
