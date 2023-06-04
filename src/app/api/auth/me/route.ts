@@ -1,10 +1,10 @@
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 import * as jose from 'jose'
 import {PrismaClient} from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
 
   const bearerToken = req.headers.get('authorization') as string
 
@@ -32,5 +32,15 @@ export async function POST(req: Request) {
 
 
 
-  return NextResponse.json({user}, {status: 200})
+  if(!user) return NextResponse.json({errorMessage: 'Unauthorized'}, {status: 401})
+
+
+  return NextResponse.json({
+    id: user.id,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    email: user.email,
+    phone: user.phone,
+    city: user.city,
+  }, {status: 200})
 }
