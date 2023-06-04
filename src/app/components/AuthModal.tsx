@@ -37,7 +37,7 @@ export default function AuthModal({isSignin}: { isSignin: boolean }) {
   }, [inputs])
 
 
-  const {signin} = useAuth();
+  const {signin, signup} = useAuth();
 
   const {error, loading,} = useContext(AuthenticationContext);
 
@@ -69,6 +69,8 @@ export default function AuthModal({isSignin}: { isSignin: boolean }) {
   const handleClick = () => {
     if (isSignin) {
       signin({email: inputs.email, password: inputs.password}, toggleModal)
+    }else {
+      signup(inputs, toggleModal)
     }
   }
 

@@ -84,9 +84,27 @@ export async function POST(req: Request) {
     .setExpirationTime("24h")
     .sign(secret)
 
-  return NextResponse.json({
-    token,
-  }, {status: 200})
+  // return NextResponse.json({
+  //   token,
+  // }, {status: 200})
+
+  const response = NextResponse.json({
+      firstName: user.first_name,
+      lastName: user.last_name,
+      email: user.email,
+      phone: user.phone,
+      city: user.city,
+    }
+    , {status: 200})
+
+  response.cookies.set({
+    name: 'jwt',
+    value: token,
+    httpOnly: true,
+    maxAge: 60 * 6 * 24,
+  })
+
+  return response
 
 }
 

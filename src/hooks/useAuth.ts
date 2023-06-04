@@ -27,7 +27,35 @@ const useAuth = () => {
 
   }
 
-  const signup = async () => {
+  const signup = async ({email, password, firstName, lastName, city, phone}:
+                          {
+                            email: string,
+                            password: string,
+                            firstName: string,
+                            lastName: string,
+                            city: string,
+                            phone: string
+                          },
+                        toggleModal: () => void
+  ) => {
+
+    setAuthState({loading: true, data: null, error: null})
+
+    try {
+      const response = await axios.post('/api/auth/signup', {email, password, firstName, lastName, city, phone})
+
+      setAuthState({loading: false, data: response.data, error: null})
+
+      toggleModal()
+
+    } catch (e) {
+      if (axios.isAxiosError(e) && e.response) {
+        setAuthState({loading: false, data: null, error: e.response.data.errorMessage})
+      } else {
+        setAuthState({loading: false, data: null, error: String(e)})
+      }
+    }
+
   }
 
 
