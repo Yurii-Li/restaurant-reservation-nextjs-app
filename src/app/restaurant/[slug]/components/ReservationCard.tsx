@@ -1,8 +1,21 @@
 "use client";
 
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+
 import { partySize } from "@/data";
 
 export function ReservationCard() {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+  const handleChangeDate = (date: Date | null) => {
+    if (date) {
+      return setSelectedDate(date);
+    }
+
+    return setSelectedDate(null);
+  };
+
   return (
     <div className="fixed w-[15%] bg-white rounded p-3 shadow">
       <div className="text-center border-b pb-2 font-bold">
@@ -19,7 +32,13 @@ export function ReservationCard() {
       <div className="flex justify-between">
         <div className="flex flex-col w-[48%]">
           <label htmlFor="">Date</label>
-          <input type="text" className="py-3 border-b font-light w-28" />
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleChangeDate}
+            className={"py-3 border-b font-light text-reg w-full"}
+            dateFormat={"dd/MMMM"}
+            wrapperClassName={"w-[48%]"}
+          />
         </div>
         <div className="flex flex-col w-[48%]">
           <label htmlFor="">Time</label>
