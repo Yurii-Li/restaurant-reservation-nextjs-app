@@ -1,37 +1,43 @@
-"use client"
+"use client";
 
+import { useContext } from "react";
 import Link from "next/link";
-import AuthModal from "@/app/components/AuthModal";
-import {useContext} from "react";
-import {AuthenticationContext} from "@/app/context/AuthContext";
+
+import { AuthenticationContext } from "@/app/context/AuthContext";
 import useAuth from "@/hooks/useAuth";
+import { AuthModal } from "@/app/components/AuthModal";
 
-export default function NavBar() {
+export function NavBar() {
+  const { data, loading } = useContext(AuthenticationContext);
 
-  const {data, loading,} = useContext(AuthenticationContext);
+  const { signout } = useAuth();
 
-  const {signout} = useAuth();
-
-  return(
+  return (
     <nav className={"bg-white p-2 flex justify-between"}>
-      <Link href={"/"} className={"font-bold text-gray-700 text-2xl"}> OpenTable </Link>
+      <Link href={"/"} className={"font-bold text-gray-700 text-2xl"}>
+        OpenTable
+      </Link>
       <div>
-        {
-          loading ? null : (
-            <div className={"flex"}>
-
-              {data ?
-                <button className={"bg-blue-400 text-white border mr-3 p-1 px-4 rounded"} onClick={signout}> Sign out </button>
-                : (
-                  <>
-                    <AuthModal isSignin={true}/>
-                    <AuthModal isSignin={false}/>
-                  </>
-                )}
-            </div>
-          )
-        }
+        {loading ? null : (
+          <div className={"flex"}>
+            {data ? (
+              <button
+                className={
+                  "bg-blue-400 text-white border mr-3 p-1 px-4 rounded"
+                }
+                onClick={signout}
+              >
+                Sign out
+              </button>
+            ) : (
+              <>
+                <AuthModal isSignin={true} />
+                <AuthModal isSignin={false} />
+              </>
+            )}
+          </div>
+        )}
       </div>
     </nav>
-  )
+  );
 }

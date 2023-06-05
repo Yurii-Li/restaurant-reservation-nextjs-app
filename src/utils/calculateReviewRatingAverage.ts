@@ -1,10 +1,11 @@
-import {Review} from "@prisma/client";
+import { Review } from "@prisma/client";
 
-export const calculateReviewRatingAverage = (reviews:Review[])  => {
-  if (!reviews.length)  return 0
+export const calculateReviewRatingAverage = (reviews: Review[]) => {
+  if (!reviews.length) return 0;
 
-  return reviews.reduce((sum, review) => {
-    return sum + review.rating
-  }, 0) / reviews.length
-
-}
+  return (
+    reviews.reduce((sum, review) => {
+      return sum + review.rating;
+    }, 0) / reviews.length
+  );
+};

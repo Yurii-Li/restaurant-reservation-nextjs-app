@@ -1,4 +1,4 @@
-import Header from "@/app/search/components/Header";
+import {Header} from "@/app/search/components";
 
 export default function Loading() {
   return (

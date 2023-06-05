@@ -1,17 +1,19 @@
-import Header from "@/app/components/Header";
+import { Header } from "@/app/components";
 
 export default function Loading() {
   return (
     <main>
-      <Header/>
+      <Header />
       <div className="py-3 px-36 mt-10 flex flex-wrap justify-center">
         {[...Array(12)].map((_, i) => (
-          <div key={i} className={"animate-pulse bg-slate-200 w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer "}>
-
-          </div>
-        ))
-        }
+          <div
+            key={i}
+            className={
+              "animate-pulse bg-slate-200 w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer "
+            }
+          ></div>
+        ))}
       </div>
     </main>
-  )
+  );
 }

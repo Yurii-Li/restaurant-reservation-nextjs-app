@@ -1,4 +1,4 @@
-import {Cuisine, Location, PRICE, Review} from "@prisma/client";
+import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 
 export interface RestaurantCardType {
   id: number;
@@ -12,12 +12,10 @@ export interface RestaurantCardType {
 }
 
 export interface RestaurantDetailsType {
-  id: number,
-  name: string,
-  slug: string,
-  images: string[],
-  description: string
-  reviews: Review[],
+  id: number;
+  name: string;
+  slug: string;
+  images: string[];
+  description: string;
+  reviews: Review[];
 }
-
-

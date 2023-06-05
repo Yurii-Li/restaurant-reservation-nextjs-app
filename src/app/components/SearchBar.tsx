@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import {useRouter} from "next/navigation";
-import {useState} from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default function SearchBar() {
-  const router = useRouter()
-  const [location, setLocation] = useState("")
+export function SearchBar() {
+  const router = useRouter();
+  const [location, setLocation] = useState("");
 
   return (
     <div className={"text-left text-lg py-3 m-auto flex justify-center"}>
@@ -16,12 +16,15 @@ export default function SearchBar() {
         value={location}
         onChange={(e) => setLocation(e.target.value)}
       />
-      <button className={"rounded bg-red-600 px-9 py-2 text-white"} onClick={()=> {
-        location && router.push(`/search?city=${location}`)
-        setLocation("");
-      }}>
+      <button
+        className={"rounded bg-red-600 px-9 py-2 text-white"}
+        onClick={() => {
+          location && router.push(`/search?city=${location}`);
+          setLocation("");
+        }}
+      >
         Let's go
       </button>
     </div>
-  )
+  );
 }
