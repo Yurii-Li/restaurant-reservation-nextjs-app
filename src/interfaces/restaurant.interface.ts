@@ -18,4 +18,6 @@ export interface RestaurantDetailsType {
   images: string[];
   description: string;
   reviews: Review[];
+  open_time: string;
+  close_time: string;
 }

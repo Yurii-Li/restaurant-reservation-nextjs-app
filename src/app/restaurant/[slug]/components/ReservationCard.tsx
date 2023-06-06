@@ -3,9 +3,15 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
-import { partySize } from "@/data";
+import { partySize, times } from "@/data";
 
-export function ReservationCard() {
+export function ReservationCard({
+  openTime,
+  closeTime,
+}: {
+  openTime: string;
+  closeTime: string;
+}) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleChangeDate = (date: Date | null) => {
@@ -25,7 +31,9 @@ export function ReservationCard() {
         <label htmlFor="">Party size</label>
         <select name="" className="py-3 border-b font-light" id="">
           {partySize.map(({ value, label }) => (
-            <option value={value}>{label}</option>
+            <option key={value} value={value}>
+              {label}
+            </option>
           ))}
         </select>
       </div>
@@ -40,11 +48,19 @@ export function ReservationCard() {
             wrapperClassName={"w-[48%]"}
           />
         </div>
+
         <div className="flex flex-col w-[48%]">
           <label htmlFor="">Time</label>
           <select name="" id="" className="py-3 border-b font-light">
-            <option value="">7:30 AM</option>
-            <option value="">9:30 AM</option>
+            {times.map(({ time, displayTime }) => {
+              if (time >= openTime && time <= closeTime) {
+                return (
+                  <option key={time} value={time}>
+                    {displayTime}
+                  </option>
+                );
+              }
+            })}
           </select>
         </div>
       </div>
