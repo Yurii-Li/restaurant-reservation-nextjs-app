@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {times} from "@/data/times";
+import { times } from "@/data/times";
 
 export async function GET(req: NextRequest) {
   const slug = req.nextUrl.pathname.split("/")[3];
@@ -14,8 +14,18 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  const searchTimes = times.find((t) => {
+    return t.time === time;
+  })?.searchTimes;
 
-  return NextResponse.json({ slug, day, time, partySize }, { status: 200 });
+  if (!searchTimes) {
+    return NextResponse.json(
+      { errorMessage: "Invalid data provided" },
+      { status: 400 }
+    );
+  }
+
+  return NextResponse.json({ searchTimes }, { status: 200 });
 }
 
 //http://localhost:3000/api/restaurant/vivaan-fine-indian-cuisine-ottawa/availability?day=2023-02-03&time=15:00:00.000Z&partySize=8
