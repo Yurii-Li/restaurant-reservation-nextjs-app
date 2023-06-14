@@ -1,6 +1,6 @@
-import {NextRequest, NextResponse} from "next/server";
-import {times} from "@/data/times";
-import {PrismaClient} from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+import { times } from "@/data/times";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -12,8 +12,8 @@ export async function GET(req: NextRequest) {
 
   if (!day || !time || !partySize) {
     return NextResponse.json(
-      {errorMessage: "Invalid data provided"},
-      {status: 400}
+      { errorMessage: "Invalid data provided" },
+      { status: 400 }
     );
   }
 
@@ -21,12 +21,10 @@ export async function GET(req: NextRequest) {
     return t.time === time;
   })?.searchTimes;
 
-  console.log("searchTimes", searchTimes)
-
   if (!searchTimes) {
     return NextResponse.json(
-      {errorMessage: "Invalid data provided"},
-      {status: 400}
+      { errorMessage: "Invalid data provided" },
+      { status: 400 }
     );
   }
 
@@ -56,31 +54,69 @@ export async function GET(req: NextRequest) {
       }, {});
   });
 
-
   const restaurant = await prisma.restaurant.findUnique({
     where: {
       slug,
     },
     select: {
-      tables: true
-    }
+      tables: true,
+      open_time: true,
+      close_time: true,
+    },
   });
 
   if (!restaurant) {
     return NextResponse.json(
-      {errorMessage: "Invalid data provided"},
-      {status: 400}
+      { errorMessage: "Invalid data provided" },
+      { status: 400 }
     );
   }
 
-  const tables = restaurant.tables
+  const tables = restaurant.tables;
 
+  const searchTimesWithTables = searchTimes.map((searchTime) => {
+    return {
+      date: new Date(`${day}T${searchTime}`),
+      time: searchTime,
+      tables,
+    };
+  });
 
+  searchTimesWithTables.forEach((t) => {
+    t.tables = t.tables.filter((table) => {
+      if (bookingTablesObj[t.date.toISOString()]) {
+        if (bookingTablesObj[t.date.toISOString()][table.id]) {
+          return false;
+        }
+      }
+      return true;
+    });
+  });
 
-  return NextResponse.json(
-    {searchTimes, bookings, bookingTablesObj, tables},
-    {status: 200}
-  );
+  const availabilities = searchTimesWithTables
+    .map((t) => {
+      const sumSeats = t.tables.reduce((acc, table) => {
+        return acc + table.seats;
+      }, 0);
+
+      return {
+        time: t.time,
+        available: sumSeats >= parseInt(partySize),
+      };
+    })
+    .filter((availability) => {
+      const timeIsAfterOpeningHours =
+        new Date(`${day}T${availability.time}`) >=
+        new Date(`${day}T${restaurant.open_time}`);
+
+      const timeIsBeforeClosingHours =
+        new Date(`${day}T${availability.time}`) <=
+        new Date(`${day}T${restaurant.close_time}`);
+
+      return timeIsAfterOpeningHours && timeIsBeforeClosingHours;
+    });
+
+  return NextResponse.json({ availabilities }, { status: 200 });
 }
 
 //http://localhost:3000/api/restaurant/vivaan-fine-indian-cuisine-ottawa/availability?day=2023-06-07&time=14:00:00.000Z&partySize=8
