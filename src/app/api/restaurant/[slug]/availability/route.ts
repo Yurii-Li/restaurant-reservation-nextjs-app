@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
       return timeIsAfterOpeningHours && timeIsBeforeClosingHours;
     });
 
-  return NextResponse.json({ availabilities }, { status: 200 });
+  return NextResponse.json(availabilities , { status: 200 });
 }
 
 //http://localhost:3000/api/restaurant/vivaan-fine-indian-cuisine-ottawa/availability?day=2023-06-07&time=14:00:00.000Z&partySize=8
