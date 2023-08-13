@@ -1,10 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { Time } from "@/utils/convertToDisplayTime";
 
 export default function useAvailabilities() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<{ time: Time; available: boolean }[] | null>(
+    null,
+  );
 
   const fetchAvailabilities = async ({
     slug,

@@ -6,3 +6,4 @@ export * from "./Price";
 export * from "./RestaurantCard";
 export * from "./SearchBar";
 export * from "./Stars";
+export * from "./Spinner";

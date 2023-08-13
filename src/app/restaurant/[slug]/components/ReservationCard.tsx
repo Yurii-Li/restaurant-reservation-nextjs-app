@@ -5,6 +5,9 @@ import DatePicker from "react-datepicker";
 
 import { partySize as partySizes, times } from "@/data";
 import useAvailabilities from "@/hooks/useAvailabilities";
+import { Spinner } from "@/app/components";
+import Link from "next/link";
+import { convertToDisplayTime } from "@/utils/convertToDisplayTime";
 
 export function ReservationCard({
   openTime,
@@ -32,7 +35,7 @@ export function ReservationCard({
   };
 
   return (
-    <div className="fixed w-[15%] bg-white rounded p-3 shadow">
+    <div className="fixed w-[15%] min-w-[240px] bg-white rounded p-3 shadow">
       <div className="text-center border-b pb-2 font-bold">
         <h4 className="mr-7 text-lg">Make a Reservation</h4>
       </div>
@@ -96,10 +99,34 @@ export function ReservationCard({
               partySize,
             })
           }
+          disabled={loading}
         >
-          Find a Time
+          {loading ? <Spinner /> : "Find a Table"}
         </button>
       </div>
+      {data && data.length ? (
+        <div className={"mt-4"}>
+          <p className={"text-reg"}>Select a Time</p>
+          <div className="grid grid-cols-2 mt-2 gap-2 ">
+            {data.map((time) => {
+              return time.available ? (
+                <Link
+                  href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
+                  className={
+                    "bg-red-600 cursor-pointer p-2 text-center text-white rounded "
+                  }
+                >
+                  <p className={"text-sm font-bold"}>
+                    {convertToDisplayTime(time.time)}
+                  </p>
+                </Link>
+              ) : (
+                <p className={"bg-gray-300 p-2 rounded"}></p>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
