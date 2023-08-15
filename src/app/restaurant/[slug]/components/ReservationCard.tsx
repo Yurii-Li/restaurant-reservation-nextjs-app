@@ -108,20 +108,21 @@ export function ReservationCard({
         <div className={"mt-4"}>
           <p className={"text-reg"}>Select a Time</p>
           <div className="grid grid-cols-2 mt-2 gap-2 ">
-            {data.map((time) => {
+            {data.map((time, index) => {
               return time.available ? (
                 <Link
                   href={`/reserve/${slug}?date=${day}T${time.time}&partySize=${partySize}`}
                   className={
                     "bg-red-600 cursor-pointer p-2 text-center text-white rounded "
                   }
+                  key={index}
                 >
                   <p className={"text-sm font-bold"}>
                     {convertToDisplayTime(time.time)}
                   </p>
                 </Link>
               ) : (
-                <p className={"bg-gray-300 p-2 rounded"}></p>
+                <p className={"bg-gray-300 p-2 rounded"} key={index}></p>
               );
             })}
           </div>
