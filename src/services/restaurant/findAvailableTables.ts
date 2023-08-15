@@ -7,7 +7,6 @@ const prisma = new PrismaClient();
 export const findAvailableTables = async ({
   time,
   day,
-
   restaurant,
 }: {
   time: string;
