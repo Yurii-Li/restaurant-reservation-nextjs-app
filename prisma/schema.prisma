@@ -100,11 +100,11 @@ model Booking {
   booker_phone      String
   booker_first_name String
   booker_last_name  String
-  booker_occasion   String
-  booker_request    String
+  booker_occasion   String?
+  booker_request    String?
   restaurant_id     Int
   restaurant        Restaurant        @relation(fields: [restaurant_id], references: [id])
-  tables   BookingOnTables[]
+  tables            BookingOnTables[]
   created_at        DateTime          @default(now())
   updated_at        DateTime          @updatedAt
 }
