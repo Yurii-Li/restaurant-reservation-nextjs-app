@@ -15,7 +15,7 @@ export function ReserveHeader({
   partySize: string;
 }) {
   return (
-    <div>
+    <div className={"mx-auto w-[660px]"}>
       <h3 className="font-bold">You're almost done!</h3>
       <div className="mt-5 flex">
         <img src={image} alt={name} className="w-32 h-18 rounded" />

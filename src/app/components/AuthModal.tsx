@@ -82,7 +82,7 @@ export function AuthModal({ isSignin }: { isSignin: boolean }) {
         onClick={toggleModal}
         className={`${renderContent(
           "bg-blue-400 text-white mr-3",
-          ""
+          "",
         )} border p-1 px-4 rounded `}
       >
         {renderContent("Sign in", "Sign up")}
@@ -90,7 +90,9 @@ export function AuthModal({ isSignin }: { isSignin: boolean }) {
 
       {modal && (
         <div
-          className={"w-screen h-screen top-0 right-0 bottom-0 left-0 fixed"}
+          className={
+            "w-screen h-screen top-0 right-0 bottom-0 left-0 fixed z-10"
+          }
         >
           <div
             onClick={toggleModal}
@@ -116,7 +118,7 @@ export function AuthModal({ isSignin }: { isSignin: boolean }) {
                 <h2 className={"text-2xl font-light text-center"}>
                   {renderContent(
                     "Login Into Your Account ",
-                    "Create Your OpenTable Account"
+                    "Create Your OpenTable Account",
                   )}
                 </h2>
 

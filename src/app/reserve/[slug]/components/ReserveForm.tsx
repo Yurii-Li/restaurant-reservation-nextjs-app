@@ -3,7 +3,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import useReservation from "@/hooks/useReservation";
 import { Spinner } from "@/app/components";
-import CompletedReservation from "@/app/reserve/[slug]/components/CompletedReservation";
+import CompletedReservationMsg from "@/app/reserve/[slug]/components/CompletedReservationMsg";
 
 export function ReserveForm({
   slug,
@@ -62,9 +62,9 @@ export function ReserveForm({
   }, [inputs]);
 
   return (
-    <div className="mt-10 flex flex-wrap  justify-between w-[660px]">
+    <div className="mt-10 mx-auto flex flex-wrap justify-between w-[660px]">
       {didBook ? (
-        <CompletedReservation />
+        <CompletedReservationMsg day={day} time={time} />
       ) : (
         <>
           <input

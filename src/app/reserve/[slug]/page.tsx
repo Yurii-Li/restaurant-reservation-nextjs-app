@@ -40,7 +40,7 @@ export default async function Reserve({
 
   return (
     <div className="border-t h-screen">
-      <div className="py-9 w-3/5 m-auto">
+      <div className="py-9 w-3/5 m-auto ">
         <ReserveHeader
           image={restaurant.main_image}
           name={restaurant.name}
