@@ -2,10 +2,18 @@ import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
 
 import { ReserveForm, ReserveHeader } from "@/app/reserve/[slug]/components";
+import { Metadata } from "next";
+import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
 
-export const metadata = {
-  title: "Reserve at Milestones Grill (Toronto) | OpenTable",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  return {
+    title: `Reserve at ${renderMetaTitleBySlag(params.slug)} | OpenTable`,
+  };
+}
 
 const prisma = new PrismaClient();
 

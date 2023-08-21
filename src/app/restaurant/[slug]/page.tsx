@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-
 import { PrismaClient } from "@prisma/client";
+import { Metadata } from "next";
+
 import { RestaurantDetailsType } from "@/interfaces/restaurant.interface";
 import {
   Description,
@@ -11,11 +12,22 @@ import {
   Reviews,
   Title,
 } from "@/app/restaurant/[slug]/components";
+import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  return {
+    title: `${renderMetaTitleBySlag(params.slug)} | OpenTable`,
+  };
+}
 
 const prisma = new PrismaClient();
 
 const fetchRestaurantBySlug = async (
-  slug: string
+  slug: string,
 ): Promise<RestaurantDetailsType> => {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
@@ -38,10 +50,6 @@ const fetchRestaurantBySlug = async (
   }
 
   return restaurant;
-};
-
-export const metadata = {
-  title: "Milestones Grill (Toronto) | OpenTable",
 };
 
 export default async function RestaurantDetails({
@@ -68,7 +76,11 @@ export default async function RestaurantDetails({
       </div>
 
       <div className="w-[27%] relative text-reg">
-        <ReservationCard openTime={restaurant.open_time} closeTime={restaurant.close_time} slug={restaurant.slug} />
+        <ReservationCard
+          openTime={restaurant.open_time}
+          closeTime={restaurant.close_time}
+          slug={restaurant.slug}
+        />
       </div>
     </>
   );
