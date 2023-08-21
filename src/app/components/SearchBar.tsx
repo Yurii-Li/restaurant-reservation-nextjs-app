@@ -10,6 +10,7 @@ export function SearchBar() {
   return (
     <div className={"text-left text-lg py-3 m-auto flex justify-center"}>
       <input
+        name={"location"}
         className={"rounded  mr-3 p-2 w-[450px]"}
         type={"text"}
         placeholder={"State, city or town"}

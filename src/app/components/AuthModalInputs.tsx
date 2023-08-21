@@ -1,89 +1,103 @@
-import { ChangeEvent } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { IAuthFormInputs } from "@/interfaces/auth.interface";
 
 interface Props {
-  inputs: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    city: string;
-    password: string;
-  };
-  handleChangeInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  register: UseFormRegister<IAuthFormInputs>;
   isSignin: boolean;
+  errors: FieldErrors<IAuthFormInputs>;
 }
 
-export function AuthModalInputs({
-  inputs,
-  handleChangeInput,
-  isSignin,
-}: Props) {
+export function AuthModalInputs({ register, isSignin, errors }: Props) {
   return (
     <>
       {!isSignin && (
         <div className={"my-3 flex justify-between text-sm"}>
-          <input
-            type={"text"}
-            className={"border rounded p-2 py-3 w-[49%]"}
-            value={inputs.firstName}
-            placeholder={"First Name"}
-            onChange={handleChangeInput}
-            name={"firstName"}
-          />
+          <div className={"flex flex-col w-[49%]"}>
+            <input
+              type={"text"}
+              className={"border rounded p-2 py-3 "}
+              placeholder={"First Name"}
+              {...register("firstName")}
+            />
+            {errors.firstName && (
+              <div className={"text-red-500 text-xs"}>
+                {errors.firstName.message}
+              </div>
+            )}
+          </div>
 
-          <input
-            type={"text"}
-            className={"border rounded p-2 py-3 w-[49%]"}
-            value={inputs.lastName}
-            placeholder={"Last Name"}
-            onChange={handleChangeInput}
-            name={"lastName"}
-          />
+          <div className={"flex flex-col w-[49%]"}>
+            <input
+              type={"text"}
+              className={"border rounded p-2 py-3"}
+              placeholder={"Last Name"}
+              {...register("lastName")}
+            />
+            {errors.lastName && (
+              <div className={"text-red-500 text-xs"}>
+                {errors.lastName.message}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
-      <div className={"my-3 flex justify-between text-sm"}>
+      <div className={"my-3 flex flex-col justify-between text-sm"}>
         <input
           type={"text"}
           className={"border rounded p-2 py-3 w-full"}
-          value={inputs.email}
           placeholder={"Email"}
-          onChange={handleChangeInput}
-          name={"email"}
+          {...register("email")}
         />
+        {errors.email && (
+          <div className={"text-red-500 text-xs"}>{errors.email.message}</div>
+        )}
       </div>
 
       {!isSignin && (
         <div className={"my-3 flex justify-between text-sm"}>
-          <input
-            type={"text"}
-            className={"border rounded p-2 py-3 w-[49%]"}
-            value={inputs.phone}
-            placeholder={"Phone"}
-            onChange={handleChangeInput}
-            name={"phone"}
-          />
+          <div className={"flex flex-col w-[49%]"}>
+            <input
+              type={"text"}
+              className={"border rounded p-2 py-3"}
+              placeholder={"Phone"}
+              {...register("phone")}
+            />
+            {errors.phone && (
+              <div className={"text-red-500 text-xs"}>
+                {errors.phone.message}
+              </div>
+            )}
+          </div>
 
-          <input
-            type={"text"}
-            className={"border rounded p-2 py-3 w-[49%]"}
-            value={inputs.city}
-            placeholder={"City"}
-            onChange={handleChangeInput}
-            name={"city"}
-          />
+          <div className={"flex flex-col w-[49%]"}>
+            <input
+              type={"text"}
+              className={"border rounded p-2 py-3"}
+              placeholder={"City"}
+              {...register("city")}
+            />
+            {errors.city && (
+              <div className={"text-red-500 text-xs"}>
+                {errors.city.message}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
-      <div className={"my-3 flex justify-between text-sm"}>
+      <div className={"my-3 flex flex-col justify-between text-sm"}>
         <input
           type={"password"}
           className={"border rounded p-2 py-3 w-full"}
-          value={inputs.password}
           placeholder={"Password"}
-          onChange={handleChangeInput}
-          name={"password"}
+          {...register("password")}
         />
+        {errors.password && (
+          <div className={"text-red-500 text-xs"}>
+            {errors.password.message}
+          </div>
+        )}
       </div>
     </>
   );

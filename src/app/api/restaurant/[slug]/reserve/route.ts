@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
-import validator from "validator";
+import { reserveValidator } from "@/validators/reserve.validator";
 
 const prisma = new PrismaClient();
 
@@ -18,56 +18,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const {
-    bookerEmail,
-    bookerPhone,
-    bookerFirstName,
-    bookerLastName,
-    bookerOccasion,
-    bookerRequest,
-  } = await req.json();
+  const request = await req.json();
 
-  const errors: string[] = [];
+  const validate = reserveValidator.validate(request);
 
-  const validationSchema = [
-    {
-      valid: validator.isEmail(bookerEmail),
-      errorMessage: "Email is not valid",
-    },
-    {
-      valid: validator.isLength(bookerPhone, { min: 1 }),
-      errorMessage: "Phone is not valid",
-    },
-    {
-      valid: validator.isLength(bookerFirstName, { min: 1 }),
-      errorMessage: "First name is not valid",
-    },
-    {
-      valid: validator.isLength(bookerLastName, { min: 1 }),
-      errorMessage: "Last name is not valid",
-    },
-    {
-      valid: bookerOccasion
-        ? validator.isLength(bookerOccasion, { min: 1 })
-        : true,
-      errorMessage: "Occasion is not valid",
-    },
-    {
-      valid: bookerRequest
-        ? validator.isLength(bookerRequest, { min: 1 })
-        : true,
-      errorMessage: "Request is not valid",
-    },
-  ];
-
-  validationSchema.forEach((check) => {
-    if (!check.valid) {
-      errors.push(check.errorMessage);
-    }
-  });
-
-  if (errors.length > 0) {
-    return NextResponse.json({ errorMessage: errors[0] }, { status: 400 });
+  if (validate.error) {
+    return NextResponse.json(
+      { errorMessage: validate.error.message },
+      { status: 400 },
+    );
   }
 
   const restaurant = await prisma.restaurant.findUnique({
@@ -167,12 +126,12 @@ export async function POST(req: NextRequest) {
     data: {
       number_of_people: parseInt(partySize),
       booking_time: new Date(`${day}T${time}`),
-      booker_email: bookerEmail,
-      booker_phone: bookerPhone,
-      booker_first_name: bookerFirstName,
-      booker_last_name: bookerLastName,
-      booker_occasion: bookerOccasion,
-      booker_request: bookerRequest,
+      booker_email: request.bookerEmail,
+      booker_phone: request.bookerPhone,
+      booker_first_name: request.bookerFirstName,
+      booker_last_name: request.bookerLastName,
+      booker_occasion: request.bookerOccasion,
+      booker_request: request.bookerRequest,
       restaurant_id: restaurant.id,
     },
   });

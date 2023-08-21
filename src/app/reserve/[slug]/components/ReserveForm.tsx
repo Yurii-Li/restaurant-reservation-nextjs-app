@@ -1,9 +1,14 @@
 "use client";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import useReservation from "@/hooks/useReservation";
 import { Spinner } from "@/app/components";
 import CompletedReservationMsg from "@/app/reserve/[slug]/components/CompletedReservationMsg";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { IReserveFormInputs } from "@/interfaces/reserve.interface";
+import { reserveValidator } from "@/validators/reserve.validator";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { AuthenticationContext } from "@/app/context/AuthContext";
 
 export function ReserveForm({
   slug,
@@ -16,109 +21,114 @@ export function ReserveForm({
   time: string;
   partySize: string;
 }) {
-  const [inputs, setInputs] = useState({
-    bookerEmail: "",
-    bookerPhone: "",
-    bookerFirstName: "",
-    bookerLastName: "",
-    bookerOccasion: "",
-    bookerRequest: "",
-  });
-
-  const [disabled, setDisabled] = useState(true);
   const [didBook, setDidBook] = useState(false);
 
-  const { loading, error, createReservation } = useReservation();
+  const { loading, error: apiError, createReservation } = useReservation();
 
-  const handleClick = async () => {
+  const { data: me } = useContext(AuthenticationContext);
+
+  const handleClick: SubmitHandler<IReserveFormInputs> = async (data) => {
     await createReservation({
       slug,
       partySize,
       day,
       time,
-      ...inputs,
+      ...data,
       setDidBook,
     });
   };
 
-  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputs({
-      ...inputs,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  useEffect(() => {
-    if (
-      inputs.bookerEmail &&
-      inputs.bookerPhone &&
-      inputs.bookerFirstName &&
-      inputs.bookerLastName
-    ) {
-      return setDisabled(false);
-    }
-
-    return setDisabled(true);
-  }, [inputs]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<IReserveFormInputs>({
+    mode: "all",
+    resolver: joiResolver(reserveValidator),
+    defaultValues: {
+      bookerFirstName: me?.firstName || "",
+      bookerLastName: me?.lastName || "",
+      bookerEmail: me?.email || "",
+      bookerPhone: me?.phone || "",
+    },
+  });
 
   return (
-    <div className="mt-10 mx-auto flex flex-wrap justify-between w-[660px]">
+    <div className="mt-10 mx-auto w-[660px]">
       {didBook ? (
         <CompletedReservationMsg day={day} time={time} />
       ) : (
-        <>
-          <input
-            type="text"
-            className="border rounded p-3 w-80 mb-4"
-            placeholder="First name"
-            name={"bookerFirstName"}
-            onChange={handleChangeInput}
-            value={inputs.bookerFirstName}
-          />
-          <input
-            type="text"
-            className="border rounded p-3 w-80 mb-4"
-            placeholder="Last name"
-            name={"bookerLastName"}
-            onChange={handleChangeInput}
-            value={inputs.bookerLastName}
-          />
-          <input
-            type="text"
-            className="border rounded p-3 w-80 mb-4"
-            placeholder="Phone number"
-            name={"bookerPhone"}
-            onChange={handleChangeInput}
-            value={inputs.bookerPhone}
-          />
-          <input
-            type="text"
-            className="border rounded p-3 w-80 mb-4"
-            placeholder="Email"
-            name={"bookerEmail"}
-            onChange={handleChangeInput}
-            value={inputs.bookerEmail}
-          />
+        <form
+          className={"flex flex-wrap justify-between"}
+          onSubmit={handleSubmit(handleClick)}
+        >
+          <div className={"mb-2"}>
+            <input
+              type="text"
+              className="border rounded p-3 w-80"
+              placeholder="First name"
+              {...register("bookerFirstName")}
+            />
+            {errors.bookerFirstName && (
+              <div className={"text-red-500 text-sm"}>
+                {errors.bookerFirstName.message}
+              </div>
+            )}
+          </div>
+          <div className={"mb-2"}>
+            <input
+              type="text"
+              className="border rounded p-3 w-80"
+              placeholder="Last name"
+              {...register("bookerLastName")}
+            />
+            {errors.bookerLastName && (
+              <div className={"text-red-500 text-sm"}>
+                {errors.bookerLastName.message}
+              </div>
+            )}
+          </div>
+          <div className={"mb-2"}>
+            <input
+              type="text"
+              className="border rounded p-3 w-80"
+              placeholder="Phone number"
+              {...register("bookerPhone")}
+            />
+            {errors.bookerPhone && (
+              <div className={"text-red-500 text-sm"}>
+                {errors.bookerPhone.message}
+              </div>
+            )}
+          </div>
+          <div className={"mb-2"}>
+            <input
+              type="text"
+              className="border rounded p-3 w-80"
+              placeholder="Email"
+              {...register("bookerEmail")}
+            />
+            {errors.bookerEmail && (
+              <div className={"text-red-500 text-sm"}>
+                {errors.bookerEmail.message}
+              </div>
+            )}
+          </div>
           <input
             type="text"
             className="border rounded p-3 w-80 mb-4"
             placeholder="Occasion (optional)"
-            name={"bookerOccasion"}
-            onChange={handleChangeInput}
-            value={inputs.bookerOccasion}
+            {...register("bookerOccasion")}
           />
           <input
             type="text"
             className="border rounded p-3 w-80 mb-4"
             placeholder="Requests (optional)"
-            name={"bookerRequest"}
-            onChange={handleChangeInput}
-            value={inputs.bookerRequest}
+            {...register("bookerRequest")}
           />
           <button
             className="bg-red-600 w-full p-3 text-white font-bold rounded disabled:bg-gray-300"
-            disabled={disabled || loading}
-            onClick={handleClick}
+            disabled={!isValid || loading}
           >
             {loading ? <Spinner /> : "Complete reservation"}
           </button>
@@ -127,7 +137,7 @@ export function ReserveForm({
             of Use and Privacy Policy. Standard text message rates may apply.
             You may opt out of receiving text messages at any time.
           </p>
-        </>
+        </form>
       )}
     </div>
   );
