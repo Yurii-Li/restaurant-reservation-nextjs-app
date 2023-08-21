@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import DatePicker from "react-datepicker";
+import Link from "next/link";
 
 import { partySize as partySizes, times } from "@/data";
 import useAvailabilities from "@/hooks/useAvailabilities";
 import { Spinner } from "@/app/components";
-import Link from "next/link";
 import { convertToDisplayTime } from "@/utils/convertToDisplayTime";
 
 export function ReservationCard({
@@ -18,7 +18,12 @@ export function ReservationCard({
   closeTime: string;
   slug: string;
 }) {
-  const { error, loading, data, fetchAvailabilities } = useAvailabilities();
+  const {
+    error: apiError,
+    loading,
+    data,
+    fetchAvailabilities,
+  } = useAvailabilities();
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [time, setTime] = useState(openTime);
@@ -103,6 +108,11 @@ export function ReservationCard({
           {loading ? <Spinner /> : "Find a Table"}
         </button>
       </div>
+      {apiError && (
+        <div className={"bg-red-500 text-white text-sm p-2 rounded  mt-5"}>
+          !!! {apiError}
+        </div>
+      )}
       {data && data.length ? (
         <div className={"mt-4"}>
           <p className={"text-reg"}>Select a Time</p>

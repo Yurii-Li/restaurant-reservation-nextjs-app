@@ -1,4 +1,5 @@
 import { Item } from "@prisma/client";
+
 import { MenuCard } from "@/app/restaurant/[slug]/components/MenuCard";
 
 export function Menu({ menu }: { menu: Item[] }) {

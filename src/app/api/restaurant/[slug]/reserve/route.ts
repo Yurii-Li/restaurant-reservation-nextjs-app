@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+
 import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 import { reserveValidator } from "@/validators/reserve.validator";
 

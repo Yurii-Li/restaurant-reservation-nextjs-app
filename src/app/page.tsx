@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 import { RestaurantCardType } from "@/interfaces/restaurant.interface";
 import { Header, RestaurantCard } from "@/app/components";
 

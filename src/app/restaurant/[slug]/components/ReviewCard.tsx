@@ -1,4 +1,5 @@
 import { Review } from "@prisma/client";
+
 import { Stars } from "@/app/components";
 
 export function ReviewCard({ review }: { review: Review }) {

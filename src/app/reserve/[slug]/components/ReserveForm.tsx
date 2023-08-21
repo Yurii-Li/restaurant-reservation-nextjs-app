@@ -1,13 +1,14 @@
 "use client";
 
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+
 import useReservation from "@/hooks/useReservation";
 import { Spinner } from "@/app/components";
 import CompletedReservationMsg from "@/app/reserve/[slug]/components/CompletedReservationMsg";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { IReserveFormInputs } from "@/interfaces/reserve.interface";
 import { reserveValidator } from "@/validators/reserve.validator";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { AuthenticationContext } from "@/app/context/AuthContext";
 
 export function ReserveForm({
@@ -138,6 +139,12 @@ export function ReserveForm({
             You may opt out of receiving text messages at any time.
           </p>
         </form>
+      )}
+
+      {apiError && (
+        <div className={"bg-red-500 text-white text-sm p-2 rounded  mt-5"}>
+          !!! {apiError}
+        </div>
       )}
     </div>
   );

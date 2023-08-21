@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import errorMascot from "../../public/icons/error.png";
 
 export default function NotFound({ error }: { error: Error }) {

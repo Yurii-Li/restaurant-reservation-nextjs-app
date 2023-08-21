@@ -1,4 +1,5 @@
 import { Review } from "@prisma/client";
+
 import { ReviewCard } from "@/app/restaurant/[slug]/components/ReviewCard";
 
 export function Reviews({ reviews }: { reviews: Review[] }) {

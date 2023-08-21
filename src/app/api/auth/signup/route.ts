@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
+
 import { signUpValidator } from "@/validators";
 
 const prisma = new PrismaClient();

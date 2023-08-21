@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+
 import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 
 const prisma = new PrismaClient();
@@ -35,17 +36,15 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const searchTimesWithTables =  await findAvailableTables({
+  const searchTimesWithTables = await findAvailableTables({
     time,
     day,
-    restaurant
+    restaurant,
   });
 
-
   if (!Array.isArray(searchTimesWithTables)) {
-    return
+    return;
   }
-
 
   const availabilities = searchTimesWithTables
     .map((t) => {
@@ -72,20 +71,3 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json(availabilities, { status: 200 });
 }
-
-//http://localhost:3000/api/restaurant/vivaan-fine-indian-cuisine-ottawa/availability?day=2023-06-07&time=14:00:00.000Z&partySize=8
-
-// ПОМИЛКИ: HTTP ERROR 500. req.query = undefined  В НАСЛІДОК ЦЬОГО TypeError: Cannot destructure property 'slug' of 'req.query' as it is undefined.
-// export async function GET(req: NextApiRequest) {
-//
-//   // Чому req.query повертає undefined?
-//   console.log("req.query", req.query );
-//
-//   const {slug, day, time, partySize} = req.query as {slug: string, day: string, time: string, partySize: string};
-//
-//   if (!day || !time || !partySize) {
-//     return NextResponse.json({ errorMessage: "Invalid data provided" }, { status: 400 });
-//   }
-//
-//   return NextResponse.json( { slug, day, time, partySize }, { status: 200 });
-// }

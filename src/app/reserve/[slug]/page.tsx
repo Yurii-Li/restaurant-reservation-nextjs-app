@@ -1,6 +1,7 @@
-import { ReserveForm, ReserveHeader } from "@/app/reserve/[slug]/components";
 import { PrismaClient } from "@prisma/client";
 import { notFound } from "next/navigation";
+
+import { ReserveForm, ReserveHeader } from "@/app/reserve/[slug]/components";
 
 export const metadata = {
   title: "Reserve at Milestones Grill (Toronto) | OpenTable",

@@ -1,4 +1,5 @@
 import { Cuisine, Location, PRICE, PrismaClient } from "@prisma/client";
+
 import { RestaurantCardType } from "@/interfaces/restaurant.interface";
 import { Header, RestaurantCard, SearchSideBar } from "@/app/search/components";
 
@@ -15,7 +16,7 @@ interface SearchParams {
 }
 
 const fetchRestaurantsByCity = (
-  searchParams: SearchParams
+  searchParams: SearchParams,
 ): Promise<RestaurantCardType[]> => {
   const select = {
     id: true,

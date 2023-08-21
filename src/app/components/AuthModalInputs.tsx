@@ -1,4 +1,5 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
+
 import { IAuthFormInputs } from "@/interfaces/auth.interface";
 
 interface Props {

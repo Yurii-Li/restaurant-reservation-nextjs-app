@@ -1,7 +1,9 @@
 import { Inter } from "next/font/google";
+import { ReactNode } from "react";
 
 import AuthContext from "@/app/context/AuthContext";
 import { NavBar } from "@/app/components";
+
 import "./globals.css";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -11,11 +13,7 @@ export const metadata = {
   title: "OpenTable",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>

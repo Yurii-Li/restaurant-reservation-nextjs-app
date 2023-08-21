@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import * as jose from "jose";
+
 import { signInValidator } from "@/validators";
 
 const prisma = new PrismaClient();
@@ -49,8 +49,6 @@ export async function POST(req: Request) {
     .setProtectedHeader({ alg })
     .setExpirationTime("24h")
     .sign(secret);
-
-  // return NextResponse.json({token}, {status: 200})
 
   const response = NextResponse.json(
     {

@@ -1,10 +1,11 @@
 import { Header } from "@/app/restaurant/[slug]/components";
+import { ReactNode } from "react";
 
 export default function RestaurantLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: { slug: string };
 }) {
   return (
