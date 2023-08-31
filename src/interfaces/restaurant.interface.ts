@@ -1,6 +1,6 @@
 import { Cuisine, Location, PRICE, Review } from "@prisma/client";
 
-export interface RestaurantCardType {
+export interface IRestaurantCard {
   id: number;
   name: string;
   main_image: string;
@@ -11,7 +11,7 @@ export interface RestaurantCardType {
   reviews: Review[];
 }
 
-export interface RestaurantDetailsType {
+export interface IRestaurantDetails {
   id: number;
   name: string;
   slug: string;

@@ -4,6 +4,10 @@ import { Metadata } from "next";
 import { Menu, RestaurantNavBar } from "@/app/restaurant/[slug]/components";
 import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
 
+interface IProps {
+  params: { slug: string };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -33,11 +37,7 @@ const fetchRestaurantMenu = async (slug: string): Promise<Item[]> => {
   return restaurant.items;
 };
 
-export default async function RestaurantMenu({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function RestaurantMenu({ params }: IProps) {
   const menu = await fetchRestaurantMenu(params.slug);
 
   return (

@@ -2,7 +2,11 @@ import { Item } from "@prisma/client";
 
 import { MenuCard } from "@/app/restaurant/[slug]/components/MenuCard";
 
-export function Menu({ menu }: { menu: Item[] }) {
+interface IProps {
+  menu: Item[];
+}
+
+export function Menu({ menu }: IProps) {
   return (
     <main className="bg-white mt-5">
       <div>

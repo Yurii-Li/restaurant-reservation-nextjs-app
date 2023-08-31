@@ -2,13 +2,13 @@ import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import { IAuthFormInputs } from "@/interfaces/auth.interface";
 
-interface Props {
+interface IProps {
   register: UseFormRegister<IAuthFormInputs>;
   isSignin: boolean;
   errors: FieldErrors<IAuthFormInputs>;
 }
 
-export function AuthModalInputs({ register, isSignin, errors }: Props) {
+export function AuthModalInputs({ register, isSignin, errors }: IProps) {
   return (
     <>
       {!isSignin && (

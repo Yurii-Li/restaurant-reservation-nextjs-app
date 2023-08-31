@@ -4,15 +4,13 @@ import Image from "next/image";
 
 import errorMascot from "../../public/icons/error.png";
 
-export default function Error({
-  error,
-  reset,
-}: {
+interface IProps {
   error: Error;
   reset: () => void;
-}) {
-  console.error(error);
+}
 
+export default function Error({ error, reset }: IProps) {
+  console.error(error);
   return (
     <div
       className={

@@ -2,7 +2,11 @@ import { Review } from "@prisma/client";
 
 import { ReviewCard } from "@/app/restaurant/[slug]/components/ReviewCard";
 
-export function Reviews({ reviews }: { reviews: Review[] }) {
+interface IProps {
+  reviews: Review[];
+}
+
+export function Reviews({ reviews }: IProps) {
   return (
     <div>
       <h1 className="font-bold text-3xl mt-10 mb-7 borber-b pb-5">

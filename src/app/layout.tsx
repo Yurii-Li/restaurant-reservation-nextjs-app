@@ -13,7 +13,11 @@ export const metadata = {
   title: "OpenTable",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+interface IProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: IProps) {
   return (
     <html lang="en">
       <body className={inter.className}>

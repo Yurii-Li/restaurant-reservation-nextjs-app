@@ -7,13 +7,12 @@ import emptyStar from "../../../public/icons/empty-star.png";
 
 import { calculateReviewRatingAverage } from "@/utils/calculateReviewRatingAverage";
 
-export function Stars({
-  reviews,
-  rating,
-}: {
+interface IProps {
   reviews: Review[];
   rating?: number;
-}) {
+}
+
+export function Stars({ reviews, rating }: IProps) {
   const reviewRating = rating || calculateReviewRatingAverage(reviews);
 
   const renderStars = () => {

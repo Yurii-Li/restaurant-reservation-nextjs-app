@@ -1,14 +1,14 @@
 import Link from "next/link";
 
-import { RestaurantCardType } from "@/interfaces/restaurant.interface";
+import { IRestaurantCard } from "@/interfaces/restaurant.interface";
 import Price from "@/app/components/Price";
 import { Stars } from "@/app/components/Stars";
 
-interface Props {
-  restaurant: RestaurantCardType;
+interface IProps {
+  restaurant: IRestaurantCard;
 }
 
-export function RestaurantCard({ restaurant }: Props) {
+export function RestaurantCard({ restaurant }: IProps) {
   return (
     <div
       className={"w-64 h-72 m-3 rounded overflow-hidden border cursor-pointer"}

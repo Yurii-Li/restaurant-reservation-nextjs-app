@@ -2,13 +2,12 @@ import { format } from "date-fns";
 
 import { convertToDisplayTime, Time } from "@/utils/convertToDisplayTime";
 
-export default function CompletedReservationMsg({
-  day,
-  time,
-}: {
+interface IProps {
   day: string;
   time: string;
-}) {
+}
+
+export default function CompletedReservationMsg({ day, time }: IProps) {
   return (
     <div
       className={

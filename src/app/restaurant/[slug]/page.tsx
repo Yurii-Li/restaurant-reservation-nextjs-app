@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
 
-import { RestaurantDetailsType } from "@/interfaces/restaurant.interface";
+import { IRestaurantDetails } from "@/interfaces/restaurant.interface";
 import {
   Description,
   Images,
@@ -13,6 +13,10 @@ import {
   Title,
 } from "@/app/restaurant/[slug]/components";
 import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
+
+interface IProps {
+  params: { slug: string };
+}
 
 export async function generateMetadata({
   params,
@@ -28,7 +32,7 @@ const prisma = new PrismaClient();
 
 const fetchRestaurantBySlug = async (
   slug: string,
-): Promise<RestaurantDetailsType> => {
+): Promise<IRestaurantDetails> => {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
       slug: slug,
@@ -52,11 +56,7 @@ const fetchRestaurantBySlug = async (
   return restaurant;
 };
 
-export default async function RestaurantDetails({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function RestaurantDetails({ params }: IProps) {
   const restaurant = await fetchRestaurantBySlug(params.slug);
 
   return (

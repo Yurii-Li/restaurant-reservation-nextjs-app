@@ -1,4 +1,8 @@
-export function Header({ name }: { name: string }) {
+interface IProps {
+  name: string;
+}
+
+export function Header({ name }: IProps) {
   const renderTitle = () => {
     const nameArray = name.split("-");
 

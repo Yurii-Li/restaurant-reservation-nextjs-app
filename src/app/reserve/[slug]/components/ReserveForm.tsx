@@ -11,17 +11,14 @@ import { IReserveFormInputs } from "@/interfaces/reserve.interface";
 import { reserveValidator } from "@/validators/reserve.validator";
 import { AuthenticationContext } from "@/app/context/AuthContext";
 
-export function ReserveForm({
-  slug,
-  day,
-  time,
-  partySize,
-}: {
+interface IProps {
   slug: string;
   day: string;
   time: string;
   partySize: string;
-}) {
+}
+
+export function ReserveForm({ slug, day, time, partySize }: IProps) {
   const [didBook, setDidBook] = useState(false);
 
   const { loading, error: apiError, createReservation } = useReservation();

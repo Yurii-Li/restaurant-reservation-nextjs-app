@@ -1,6 +1,6 @@
 import { Cuisine, Location, PRICE, PrismaClient } from "@prisma/client";
 
-import { RestaurantCardType } from "@/interfaces/restaurant.interface";
+import { IRestaurantCard } from "@/interfaces/restaurant.interface";
 import { Header, RestaurantCard, SearchSideBar } from "@/app/search/components";
 
 export const metadata = {
@@ -9,15 +9,19 @@ export const metadata = {
 
 const prisma = new PrismaClient();
 
-interface SearchParams {
+interface IProps {
+  searchParams: ISearchParams;
+}
+
+interface ISearchParams {
   city?: string;
   cuisine?: string;
   price?: PRICE;
 }
 
 const fetchRestaurantsByCity = (
-  searchParams: SearchParams,
-): Promise<RestaurantCardType[]> => {
+  searchParams: ISearchParams,
+): Promise<IRestaurantCard[]> => {
   const select = {
     id: true,
     name: true,
@@ -59,11 +63,7 @@ const fetchCuisines = (): Promise<Cuisine[]> => {
   return prisma.cuisine.findMany();
 };
 
-export default async function Search({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
+export default async function Search({ searchParams }: IProps) {
   const restaurants = await fetchRestaurantsByCity(searchParams);
 
   const locations = await fetchLocations();

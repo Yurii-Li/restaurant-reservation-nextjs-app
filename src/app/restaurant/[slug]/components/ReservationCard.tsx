@@ -9,15 +9,13 @@ import useAvailabilities from "@/hooks/useAvailabilities";
 import { Spinner } from "@/app/components";
 import { convertToDisplayTime } from "@/utils/convertToDisplayTime";
 
-export function ReservationCard({
-  openTime,
-  closeTime,
-  slug,
-}: {
+interface IProps {
   openTime: string;
   closeTime: string;
   slug: string;
-}) {
+}
+
+export function ReservationCard({ openTime, closeTime, slug }: IProps) {
   const {
     error: apiError,
     loading,

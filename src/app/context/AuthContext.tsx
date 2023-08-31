@@ -11,7 +11,7 @@ import {
 import { getCookie } from "cookies-next";
 import axios from "axios";
 
-interface User {
+interface IUser {
   id: number;
   firstName: string;
   lastName: string;
@@ -20,24 +20,24 @@ interface User {
   phone: string;
 }
 
-interface State {
+interface IState {
   loading: boolean;
-  data: User | null;
+  data: IUser | null;
   error: string | null;
 }
 
-interface AuthState extends State {
-  setAuthState: Dispatch<SetStateAction<State>>;
+interface IAuthState extends IState {
+  setAuthState: Dispatch<SetStateAction<IState>>;
 }
 
-export const AuthenticationContext = createContext<AuthState>({
+export const AuthenticationContext = createContext<IAuthState>({
   loading: false,
   data: null,
   error: null,
   setAuthState: () => {},
 });
 export default function AuthContext({ children }: { children: ReactNode }) {
-  const [authState, setAuthState] = useState<State>({
+  const [authState, setAuthState] = useState<IState>({
     loading: true,
     data: null,
     error: null,

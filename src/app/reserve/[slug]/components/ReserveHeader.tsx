@@ -2,19 +2,15 @@ import { format } from "date-fns";
 
 import { convertToDisplayTime, Time } from "@/utils/convertToDisplayTime";
 
-export function ReserveHeader({
-  image,
-  name,
-  date,
-  time,
-  partySize,
-}: {
+interface IProps {
   image: string;
   name: string;
   date: string;
   time: string;
   partySize: string;
-}) {
+}
+
+export function ReserveHeader({ image, name, date, time, partySize }: IProps) {
   return (
     <div className={"mx-auto w-[660px]"}>
       <h3 className="font-bold">You're almost done!</h3>

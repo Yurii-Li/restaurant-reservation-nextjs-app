@@ -2,7 +2,11 @@ import { Review } from "@prisma/client";
 
 import { Stars } from "@/app/components";
 
-export function ReviewCard({ review }: { review: Review }) {
+interface IProps {
+  review: Review;
+}
+
+export function ReviewCard({ review }: IProps) {
   return (
     <div className="border-b pb-7 mb-7">
       <div className="flex">

@@ -1,13 +1,12 @@
 import { Header } from "@/app/restaurant/[slug]/components";
 import { ReactNode } from "react";
 
-export default function RestaurantLayout({
-  children,
-  params,
-}: {
+interface IProps {
   children: ReactNode;
   params: { slug: string };
-}) {
+}
+
+export default function RestaurantLayout({ children, params }: IProps) {
   return (
     <main>
       <Header name={params.slug} />

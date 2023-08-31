@@ -5,6 +5,16 @@ import { ReserveForm, ReserveHeader } from "@/app/reserve/[slug]/components";
 import { Metadata } from "next";
 import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
 
+interface IProps {
+  params: {
+    slug: string;
+  };
+  searchParams: {
+    date: string;
+    partySize: string;
+  };
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -31,18 +41,7 @@ const fetchRestaurantBySlug = async (slug: string) => {
   return restaurant;
 };
 
-export default async function Reserve({
-  params,
-  searchParams,
-}: {
-  params: {
-    slug: string;
-  };
-  searchParams: {
-    date: string;
-    partySize: string;
-  };
-}) {
+export default async function Reserve({ params, searchParams }: IProps) {
   const restaurant = await fetchRestaurantBySlug(params.slug);
 
   const [day, time] = searchParams.date.split("T");

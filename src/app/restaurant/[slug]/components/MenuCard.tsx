@@ -1,6 +1,10 @@
 import { Item } from "@prisma/client";
 
-export function MenuCard({ item }: { item: Item }) {
+interface IProps {
+  item: Item;
+}
+
+export function MenuCard({ item }: IProps) {
   return (
     <div className=" border rounded p-3 w-[49%] mb-3">
       <h3 className="font-bold text-lg">{item.name}</h3>

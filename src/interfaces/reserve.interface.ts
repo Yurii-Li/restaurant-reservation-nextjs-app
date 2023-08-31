@@ -1,10 +1,3 @@
-//bookerEmail: "",
-//     bookerPhone: "",
-//     bookerFirstName: "",
-//     bookerLastName: "",
-//     bookerOccasion: "",
-//     bookerRequest: "",
-
 export interface IReserveFormInputs {
   bookerEmail: string;
   bookerPhone: string;

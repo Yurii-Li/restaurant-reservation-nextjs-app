@@ -10,7 +10,11 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { signInValidator, signUpValidator } from "@/validators";
 import { IAuthFormInputs } from "@/interfaces/auth.interface";
 
-export function AuthModal({ isSignin }: { isSignin: boolean }) {
+interface IProps {
+  isSignin: boolean;
+}
+
+export function AuthModal({ isSignin }: IProps) {
   const [modal, setModal] = useState(false);
 
   const { signin, signup } = useAuth();

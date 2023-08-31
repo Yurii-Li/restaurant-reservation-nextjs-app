@@ -4,7 +4,11 @@ import Image from "next/image";
 
 import errorMascot from "../../public/icons/error.png";
 
-export default function NotFound({ error }: { error: Error }) {
+interface IProps {
+  error: Error;
+}
+
+export default function NotFound({ error }: IProps) {
   console.error(error);
 
   return (

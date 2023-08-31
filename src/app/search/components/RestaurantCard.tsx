@@ -1,15 +1,15 @@
 import Link from "next/link";
 
-import { RestaurantCardType } from "@/interfaces/restaurant.interface";
+import { IRestaurantCard } from "@/interfaces/restaurant.interface";
 import Price from "@/app/components/Price";
 import { calculateReviewRatingAverage } from "@/utils/calculateReviewRatingAverage";
 import { Stars } from "@/app/components/Stars";
 
-export function RestaurantCard({
-  restaurant,
-}: {
-  restaurant: RestaurantCardType;
-}) {
+interface IProps {
+  restaurant: IRestaurantCard;
+}
+
+export function RestaurantCard({ restaurant }: IProps) {
   const renderRatingText = (): string => {
     const rating = calculateReviewRatingAverage(restaurant.reviews);
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Cuisine, Location, PRICE } from "@prisma/client";
 
-interface SearchSideBarProps {
+interface IProps {
   locations: Location[];
   cuisines: Cuisine[];
   searchParams: {
@@ -12,11 +12,7 @@ interface SearchSideBarProps {
   };
 }
 
-export function SearchSideBar({
-  locations,
-  cuisines,
-  searchParams,
-}: SearchSideBarProps) {
+export function SearchSideBar({ locations, cuisines, searchParams }: IProps) {
   const prices = [
     {
       price: PRICE.CHEAP,
