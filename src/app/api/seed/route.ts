@@ -1,7 +1,5 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { PRICE, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { PRICE } from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 export async function GET(request: Request) {
   await prisma.table.deleteMany();

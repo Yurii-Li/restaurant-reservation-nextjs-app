@@ -1,13 +1,12 @@
-import { Cuisine, Location, PRICE, PrismaClient } from "@prisma/client";
+import { Cuisine, Location, PRICE } from "@prisma/client";
 
 import { IRestaurantCard } from "@/interfaces/restaurant.interface";
 import { Header, RestaurantCard, SearchSideBar } from "@/app/search/components";
+import prisma from "@/lib/prisma";
 
 export const metadata = {
   title: "Search | OpenTable",
 };
-
-const prisma = new PrismaClient();
 
 interface IProps {
   searchParams: ISearchParams;

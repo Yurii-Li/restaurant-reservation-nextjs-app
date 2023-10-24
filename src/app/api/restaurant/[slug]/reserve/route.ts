@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 
 import { findAvailableTables } from "@/services/restaurant/findAvailableTables";
 import { reserveValidator } from "@/validators/reserve.validator";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   const slug = req.nextUrl.pathname.split("/")[3];

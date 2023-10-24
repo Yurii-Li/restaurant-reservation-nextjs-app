@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
 import { Metadata } from "next";
 
 import { IRestaurantDetails } from "@/interfaces/restaurant.interface";
@@ -13,6 +12,7 @@ import {
   Title,
 } from "@/app/restaurant/[slug]/components";
 import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
+import prisma from "@/lib/prisma";
 
 interface IProps {
   params: { slug: string };
@@ -27,8 +27,6 @@ export async function generateMetadata({
     title: `${renderMetaTitleBySlag(params.slug)} | OpenTable`,
   };
 }
-
-const prisma = new PrismaClient();
 
 const fetchRestaurantBySlug = async (
   slug: string,

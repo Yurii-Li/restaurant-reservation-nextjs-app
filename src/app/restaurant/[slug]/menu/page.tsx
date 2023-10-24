@@ -1,8 +1,9 @@
-import { Item, PrismaClient } from "@prisma/client";
+import { Item } from "@prisma/client";
 import { Metadata } from "next";
 
 import { Menu, RestaurantNavBar } from "@/app/restaurant/[slug]/components";
 import { renderMetaTitleBySlag } from "@/utils/renderMetaTitleBySlag";
+import prisma from "@/lib/prisma";
 
 interface IProps {
   params: { slug: string };
@@ -17,8 +18,6 @@ export async function generateMetadata({
     title: `Menu ${renderMetaTitleBySlag(params.slug)} | OpenTable`,
   };
 }
-
-const prisma = new PrismaClient();
 
 const fetchRestaurantMenu = async (slug: string): Promise<Item[]> => {
   const restaurant = await prisma.restaurant.findUnique({

@@ -1,9 +1,6 @@
-import { PrismaClient } from "@prisma/client";
-
 import { IRestaurantCard } from "@/interfaces/restaurant.interface";
 import { Header, RestaurantCard } from "@/app/components";
-
-const prisma = new PrismaClient();
+import prisma from "@/lib/prisma";
 
 const fetchRestaurants = (): Promise<IRestaurantCard[]> => {
   return prisma.restaurant.findMany({
